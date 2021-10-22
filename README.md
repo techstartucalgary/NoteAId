@@ -7,3 +7,5 @@ Note Summarizer Mobile App
 Nuha Shaikh (nuhashaikh)
 
 **Front-end Team:**
+Contributer: Aashirbad Dhital, Mahira Zabin, Harrison Chen
+
