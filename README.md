@@ -1,5 +1,5 @@
 # NoteAId
 Note Summarizer Mobile App
 
-Contributer: Aashirbad Dhital, Mahira Zabin, Harrison Chen
+Contributors: Aashirbad Dhital (Aashirbadd), Mahira Zabin, Harrison Chen
 
