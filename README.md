@@ -1,10 +1,6 @@
 # NoteAId
 
-
-Contributors: Aashirbad Dhital (Aashirbadd), Mahira Zabin, Harrison Chen
-
 # Contributor
-
 
 **Back-end Team:**
 Nuha Shaikh (nuhashaikh)
