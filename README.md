@@ -1,4 +1,5 @@
 # NoteAId
 Note Summarizer Mobile App
 
-Contributer: Aashirbad Dhital
+Contributer: Aashirbad Dhital, Mahira Zabin
+
