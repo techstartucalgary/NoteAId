@@ -1,13 +1,14 @@
 # NoteAId
 Note Summarizer Mobile App
 
-# Contributor 
+# Contributors 
 
 **Back-end Team:**
-Nuha Shaikh (nuhashaikh)
-Harrison Chen
+Nuha Shaikh (nuhashaikh) <br />
+Harrison Chen<br />
 
 **Front-end Team:**
-Aashirbad Dhital
-Mahira Zabin, 
+Aashirbad Dhital<br />
+Mahira Zabin<br />
+
 
