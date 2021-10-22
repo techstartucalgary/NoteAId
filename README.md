@@ -7,6 +7,6 @@ Nuha Shaikh (nuhashaikh)
 Harrison Chen
 
 **Front-end Team:**
-Aashirbad Dhital
+Aashirbad Dhital (Aashirbadd),
 Mahira Zabin (mahirazabin),
 Carissa Or (carissaor)
