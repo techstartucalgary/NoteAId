@@ -9,4 +9,4 @@ Harrison Chen
 **Front-end Team:**
 Aashirbad Dhital
 Mahira Zabin (mahirazabin),
-Carissa Or
+Carissa Or (carissaor)
