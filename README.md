@@ -5,7 +5,9 @@ Note Summarizer Mobile App
 
 **Back-end Team:**
 Nuha Shaikh (nuhashaikh)
+Harrison Chen
 
 **Front-end Team:**
-Contributer: Aashirbad Dhital, Mahira Zabin, Harrison Chen
+Aashirbad Dhital
+Mahira Zabin, 
 
