@@ -4,7 +4,9 @@
 
 **Back-end Team:**
 Nuha Shaikh (nuhashaikh)
+Harrison Chen
 
 **Front-end Team:**
-
-Contributer: Aashirbad Dhital, Mahira Zabin (mahirazabin), Harrison Chen
+Aashirbad Dhital
+Mahira Zabin (mahirazabin),
+Carissa Or
