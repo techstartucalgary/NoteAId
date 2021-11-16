@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { ImageBackground, StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableHighlight } from 'react-native';
 
 export default function App() {
   return (
@@ -11,12 +11,16 @@ export default function App() {
         <Text style={styles.subtitle}>Summarise your notes with Ai</Text>
       </SafeAreaView>
       <View style={styles.buttonArray}>
-      <View style={styles.photoButton}>
-        <Text style={styles.defaultText}>Summarise Photo</Text>
-      </View>
-      <View style={styles.pdfButton}>
-        <Text style={styles.defaultText}>Summarise PDF</Text>
-      </View>
+        <TouchableHighlight activeOpacity={1} onPress={() => {console.log("Photo Summarised")}}>
+          <View style={styles.photoButton}>
+            <Text style={styles.defaultText}>Summarise Photo</Text>
+          </View> 
+        </TouchableHighlight>
+        <TouchableHighlight activeOpacity={1} onPress={() => {console.log("PDF Summarised")}}>
+          <View style={styles.pdfButton}>
+            <Text style={styles.defaultText}>Summarise PDF</Text>
+          </View>
+        </TouchableHighlight>
       </View>
       
       
@@ -51,7 +55,7 @@ const styles = StyleSheet.create({
     fontFamily: "AvenirNextCondensed-UltraLightItalic",
     fontSize: 18,
     fontWeight: '400',
-    color: 'white'
+    color: 'white',
   },
   photoButton: {
     //backgroundColor: '#0DA062', // Old colors
@@ -81,8 +85,8 @@ const styles = StyleSheet.create({
     //backgroundColor:'yellow',
     fontFamily: "AvenirNext-Bold",
     fontSize: 20,
-    color: "white"
+    color: "white",
   }
 });
 
-// Color Palette: https://coolors.co/f72585-b5179e-7209b7-560bad-480ca8-3a0ca3-3f37c9-4361ee-4895ef-4cc9f0
+// Color Palatte: https://coolors.co/f72585-b5179e-7209b7-560bad-480ca8-3a0ca3-3f37c9-4361ee-4895ef-4cc9f0
