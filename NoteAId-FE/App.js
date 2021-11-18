@@ -1,22 +1,65 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { ImageBackground, StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableHighlight } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+import * as FileSystem from 'expo-file-system';
+
+import React, {useState, useEffect} from 'react';
+import { MediaLibrary, Image, Button, ImageBackground, StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableHighlight } from 'react-native';
 
 export default function App() {
+  const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
+  }, []);
+
+  const [imageUri, setImageUri] = useState();
+
+  const selectImage = async () => {
+    try {
+        const result = await ImagePicker.launchImageLibraryAsync();
+        if (!result.cancelled){
+          setImageUri(result.uri);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+  }
+
+  const selectPDF = async () => {
+    try {
+        const result = await FileSystem.requestMediaLibraryPermissionsAsync;
+        if (!result.cancelled){
+          setImageUri(result.uri);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+  }
+
   return (
     <ImageBackground style={styles.container}
     source={require('./assets/bkgBlack.png')}>
       <SafeAreaView style = {styles.topBar}> 
-        <Text adjustFontSizeToFit= {true} style={styles.title}>NoteAid</Text>
+        <Text onPress={()=>{console.log("Go to Help Page")}} adjustFontSizeToFit= {true} style={styles.title}>NoteAid</Text>
         <Text style={styles.subtitle}>Summarise your notes with Ai</Text>
       </SafeAreaView>
+      <Image source={{uri: imageUri}} style={{width:200, height: 200}}/>
+
       <View style={styles.buttonArray}>
-        <TouchableHighlight activeOpacity={1} onPress={() => {console.log("Photo Summarised")}}>
+        <TouchableHighlight activeOpacity={1} onPress={selectImage}>
           <View style={styles.photoButton}>
             <Text style={styles.defaultText}>Summarise Photo</Text>
           </View> 
         </TouchableHighlight>
-        <TouchableHighlight activeOpacity={1} onPress={() => {console.log("PDF Summarised")}}>
+        <TouchableHighlight activeOpacity={1} onPress={selectImage}>
           <View style={styles.pdfButton}>
             <Text style={styles.defaultText}>Summarise PDF</Text>
           </View>
@@ -24,7 +67,10 @@ export default function App() {
       </View>
       
       
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
+      
+      
+
     </ImageBackground>
   );
 }
