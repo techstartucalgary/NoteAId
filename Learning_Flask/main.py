@@ -7,7 +7,7 @@ api = Api(app) #wrap App in an API -> using RESTful API
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 
-class VideoModel(db.Model): 
+class ImageModel(db.Model): 
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(100), nullable=False)
 	views = db.Column(db.Integer, nullable=False)
