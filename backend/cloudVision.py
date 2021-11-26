@@ -1,11 +1,14 @@
 # Import the base64 encoding library.
-import base64
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getenv(
+    'GOOGLE_APPLICATION_CREDENTIALS')
 
 # Pass the image data to an encoding function.
 
-def encode_image(image):
-  image_content = image.read()
-  return base64.b64encode(image_content)
 
 def detect_text(path):
     """Detects text in the file."""
@@ -13,7 +16,8 @@ def detect_text(path):
     import io
     client = vision.ImageAnnotatorClient()
 
-    with io.open(path, 'rb') as image_file:
+    image_path = os.path.join(os.getcwd(), path)
+    with io.open(image_path, 'rb') as image_file:
         content = image_file.read()
 
     image = vision.Image(content=content)
@@ -31,7 +35,8 @@ def detect_text(path):
         print('bounds: {}'.format(','.join(vertices)))
 
     if response.error.message:
-        raise Exception('{}\nFor more info on error messages, check: https://cloud.google.com/apis/design/errors'.format(response.error.message))
+        raise Exception(
+            '{}\nFor more info on error messages, check: https://cloud.google.com/apis/design/errors'.format(response.error.message))
 
 
-detect_text()
+detect_text('backend\\notes.png')
