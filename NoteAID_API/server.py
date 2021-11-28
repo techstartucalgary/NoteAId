@@ -9,7 +9,7 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
- 
+ #define a flask route
 def upload_file(): #uploading image
     if request.method == 'POST':
         # check if the post request has the file part
@@ -29,7 +29,7 @@ def upload_file(): #uploading image
 #In this case, if a person goes to /return-files/,
 # and clicks the download button, they will get an image returned.
 
-@app.route('/return-files/') #return a pdf file
+#return a pdf file
 def return_files_tut():
 	try:
 		return send_file('/var/www/PythonProgramming/PythonProgramming/static/ohhey.pdf', attachment_filename='ohhey.pdf')
