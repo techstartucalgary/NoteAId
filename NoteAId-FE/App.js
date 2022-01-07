@@ -3,7 +3,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import * as FileSystem from 'expo-file-system';
 
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { MediaLibrary, Image, Button, ImageBackground, StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableHighlight } from 'react-native';
 
 export default function App() {
@@ -21,43 +21,70 @@ export default function App() {
   }, []);
 
   const [imageUri, setImageUri] = useState();
+  const [summary, setSummary] = useState();
+  const [summaryDisplay, setSummaryDisplay] = useState("none");
+
+  const uploadImage = async () => {
+    const formData = new FormData();
+    formData.append('file', {
+      name: 'image.jpg',
+      type: 'image/jpeg',
+      uri: Platform.OS === 'ios' ? imageUri.replace('file://', '') : imageUri,
+    })
+
+    fetch('http://192.168.0.10:5000/upload', {
+      method: 'POST',
+      // headers: {
+      //   Accept: 'application/json',
+      //   'Content-Type': 'application/json'
+      // },
+      body: formData
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
+        setSummary(res);
+        setSummaryDisplay('flex')
+      });
+  }
 
   const selectImage = async () => {
     try {
-        const result = await ImagePicker.launchImageLibraryAsync();
-        if (!result.cancelled){
-          setImageUri(result.uri);
-        }
+      const result = await ImagePicker.launchImageLibraryAsync();
+      if (!result.cancelled) {
+        setImageUri(result.uri);
+        uploadImage()
+      }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   }
 
   const selectPDF = async () => {
     try {
-        const result = await FileSystem.requestMediaLibraryPermissionsAsync;
-        if (!result.cancelled){
-          setImageUri(result.uri);
-        }
+      const result = await FileSystem.requestMediaLibraryPermissionsAsync;
+      if (!result.cancelled) {
+        setImageUri(result.uri);
+      }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   }
 
   return (
     <ImageBackground style={styles.container}
-    source={require('./assets/bkgBlack.png')}>
-      <SafeAreaView style = {styles.topBar}> 
-        <Text onPress={()=>{console.log("Go to Help Page")}} adjustFontSizeToFit= {true} style={styles.title}>NoteAid</Text>
+      source={require('./assets/bkgBlack.png')}>
+      <SafeAreaView style={styles.topBar}>
+        <Text onPress={() => { console.log("Go to Help Page") }} adjustFontSizeToFit={true} style={styles.title}>NoteAid</Text>
         <Text style={styles.subtitle}>Summarise your notes with Ai</Text>
       </SafeAreaView>
-      <Image source={{uri: imageUri}} style={{width:200, height: 200}}/>
+      {/* <Image source={{uri: imageUri}} style={{width:200, height: 200}}/> */}
 
       <View style={styles.buttonArray}>
         <TouchableHighlight activeOpacity={1} onPress={selectImage}>
           <View style={styles.photoButton}>
             <Text style={styles.defaultText}>Summarise Photo</Text>
-          </View> 
+          </View>
         </TouchableHighlight>
         <TouchableHighlight activeOpacity={1} onPress={selectImage}>
           <View style={styles.pdfButton}>
@@ -65,11 +92,12 @@ export default function App() {
           </View>
         </TouchableHighlight>
       </View>
-      
-      
+
+      <View style={{ width: '100%', height: '100%', backgroundColor: '#fff', display: summaryDisplay }}>
+        <Text style={{ padding: 30, fontSize: 20 }}>{summary}</Text>
+      </View>
+
       <StatusBar style="light" />
-      
-      
 
     </ImageBackground>
   );
@@ -82,7 +110,7 @@ const styles = StyleSheet.create({
     //alignItems: 'center',
     //justifyContent: 'center',
   },
-  topBar:{
+  topBar: {
     flex: 1,
     justifyContent: 'flex-start',
     width: '100%',
@@ -90,7 +118,7 @@ const styles = StyleSheet.create({
     position: 'absolute'
     //,backgroundColor: 'green'
   },
-  title:{
+  title: {
     fontFamily: "AvenirNext-Bold",
     marginTop: 10, // Redundant
     fontSize: 50,
@@ -122,12 +150,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     opacity: 0.86
   },
-  buttonArray:{
+  buttonArray: {
     flex: 1,
     justifyContent: 'flex-end',
     alignContent: 'center'
   },
-  defaultText:{
+  defaultText: {
     //backgroundColor:'yellow',
     fontFamily: "AvenirNext-Bold",
     fontSize: 20,
