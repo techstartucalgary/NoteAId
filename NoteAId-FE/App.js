@@ -1,35 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
+
 const App = () => {
   return (
     <View style={styles.container}>
       <Image source={require('./assets/bkgBlack.png')} style={styles.backgroundImage}/>
       <View style={styles.footer}>
-        <View style={styles.upper}>
-          <View style={styles.left}>
-            <Text style={styles.title}>Done!</Text>
-          </View>
-          <View style={styles.right}>
-            <TouchableOpacity onPress = {() => {console.log("closed")}}>
-              <Image source={require('./assets/close.png')} style={styles.close}/>
-            </TouchableOpacity>
-          </View>
+        <Text style={styles.title}>Processing Photo</Text>
+        <View style = {styles.icon}>
+          <Image source={require('./assets/loading.png')} style={styles.loadingIcon}/>
         </View>
-        <View style = {styles.checkIcon}>
-          <Image source={require('./assets/check.png')} style={styles.icon}/>
-        </View>
-
-        <View style = {styles.buttons}>
-          <View style = {styles.saveButton}> 
-            <TouchableOpacity onPress = {() => {console.log("saved")}}>
-                <Text style = {styles.saveText}> Save </Text>
-            </TouchableOpacity>
-          </View>
-          <View styles = {styles.saveButton}>
-            <TouchableOpacity onPress = {() => {console.log("view")}}>
-                <Text style = {styles.saveText}> View </Text>
-            </TouchableOpacity>
-          </View>
+        <View style = {styles.content}>
+          <Text style={styles.descriptionText}>Sit tight, our AI is working hard</Text>
         </View>
       </View>
     </View>
@@ -54,56 +36,36 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     alignItems: 'center'
   },
-  upper:{
-    flex: 2,
-    flexDirection: 'row'
-  },
-  left:{
-    flex: 2,
-    flexDirection: 'column',
-    alignItems: 'flex-end'
-  },
   title: {
-    fontFamily: 'AvenirNext-Regular',
-    fontSize: 40,
+    fontFamily: 'AvenirNext-UltraLight',
+    fontSize: 35,
     marginTop: 30,
     color: 'white'
   },
-  right:{
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'flex-end'
-  },
-  close: {
-    width: 45,
-    height: 35,
-    marginTop: 40,
-    marginRight: 30,
-    tintColor: 'white'
-  },
-  checkIcon: {
-    flex: 4,
+  icon: {
+    flex: 6,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'center'
   },
-  icon: {
+  loadingIcon: {
     tintColor: 'white',
+    width: 150,
+    height: 150
   },
-  buttons: {
-    flex: 4,
-    justifyContent: 'flex-start',
-    paddingTop: 30
-  },
-  saveButton: {
-    width: '100%',
-    alignItems: 'center',
+  content: {
+    flex: 5,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     justifyContent: 'center',
-    backgroundColor: '#4E7E80'
+    paddingHorizontal: 40,
+    paddingTop: 40
   },
-  saveText: {
+  descriptionText: {
+    fontFamily:'AvenirNext-UltraLight',
+    fontSize: 20,
     color: 'white',
-    fontFamily: "AvenirNext-Regular",
-    fontSize: 30
+    textAlign: 'center'
   }
 });
+
