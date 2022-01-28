@@ -1,166 +1,109 @@
-import { StatusBar } from 'expo-status-bar';
-import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
-import * as FileSystem from 'expo-file-system';
-
-import React, { useState, useEffect } from 'react';
-import { MediaLibrary, Image, Button, ImageBackground, StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableHighlight } from 'react-native';
-
-export default function App() {
-  const [image, setImage] = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS !== 'web') {
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== 'granted') {
-          alert('Sorry, we need camera roll permissions to make this work!');
-        }
-      }
-    })();
-  }, []);
-
-  const [imageUri, setImageUri] = useState();
-  const [summary, setSummary] = useState();
-  const [summaryDisplay, setSummaryDisplay] = useState("none");
-
-  const uploadImage = async () => {
-    const formData = new FormData();
-    formData.append('file', {
-      name: 'image.jpg',
-      type: 'image/jpeg',
-      uri: Platform.OS === 'ios' ? imageUri.replace('file://', '') : imageUri,
-    })
-
-    fetch('http://192.168.0.10:5000/upload', {
-      method: 'POST',
-      // headers: {
-      //   Accept: 'application/json',
-      //   'Content-Type': 'application/json'
-      // },
-      body: formData
-    })
-      .then((res) => res.text())
-      .then((res) => {
-        console.log(res);
-        setSummary(res);
-        setSummaryDisplay('flex')
-      });
-  }
-
-  const selectImage = async () => {
-    try {
-      const result = await ImagePicker.launchImageLibraryAsync();
-      if (!result.cancelled) {
-        setImageUri(result.uri);
-        uploadImage()
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const selectPDF = async () => {
-    try {
-      const result = await FileSystem.requestMediaLibraryPermissionsAsync;
-      if (!result.cancelled) {
-        setImageUri(result.uri);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
+import React from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+const App = () => {
   return (
-    <ImageBackground style={styles.container}
-      source={require('./assets/bkgBlack.png')}>
-      <SafeAreaView style={styles.topBar}>
-        <Text onPress={() => { console.log("Go to Help Page") }} adjustFontSizeToFit={true} style={styles.title}>NoteAid</Text>
-        <Text style={styles.subtitle}>Summarise your notes with Ai</Text>
-      </SafeAreaView>
-      {/* <Image source={{uri: imageUri}} style={{width:200, height: 200}}/> */}
-
-      <View style={styles.buttonArray}>
-        <TouchableHighlight activeOpacity={1} onPress={selectImage}>
-          <View style={styles.photoButton}>
-            <Text style={styles.defaultText}>Summarise Photo</Text>
+    <View style={styles.container}>
+      <Image source={require('./assets/bkgBlack.png')} style={styles.backgroundImage}/>
+      <View style={styles.footer}>
+        <View style={styles.upper}>
+          <View style={styles.left}>
+            <Text style={styles.title}>Done!</Text>
           </View>
-        </TouchableHighlight>
-        <TouchableHighlight activeOpacity={1} onPress={selectImage}>
-          <View style={styles.pdfButton}>
-            <Text style={styles.defaultText}>Summarise PDF</Text>
+          <View style={styles.right}>
+            <TouchableOpacity onPress = {() => {console.log("closed")}}>
+              <Image source={require('./assets/close.png')} style={styles.close}/>
+            </TouchableOpacity>
           </View>
-        </TouchableHighlight>
+        </View>
+        <View style = {styles.checkIcon}>
+          <Image source={require('./assets/check.png')} style={styles.icon}/>
+        </View>
+
+        <View style = {styles.buttons}>
+          <View style = {styles.saveButton}> 
+            <TouchableOpacity onPress = {() => {console.log("saved")}}>
+                <Text style = {styles.saveText}> Save </Text>
+            </TouchableOpacity>
+          </View>
+          <View styles = {styles.saveButton}>
+            <TouchableOpacity onPress = {() => {console.log("view")}}>
+                <Text style = {styles.saveText}> View </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
-
-      <View style={{ width: '100%', height: '100%', backgroundColor: '#fff', display: summaryDisplay }}>
-        <Text style={{ padding: 30, fontSize: 20 }}>{summary}</Text>
-      </View>
-
-      <StatusBar style="light" />
-
-    </ImageBackground>
+    </View>
   );
 }
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E5E5E5',
-    //alignItems: 'center',
-    //justifyContent: 'center',
+    backgroundColor: '#262431',
   },
-  topBar: {
+  backgroundImage: {
     flex: 1,
-    justifyContent: 'flex-start',
-    width: '100%',
-    alignItems: 'center',   // Along Secondary Axis?
-    position: 'absolute'
-    //,backgroundColor: 'green'
+    justifyContent: 'center'
+  },
+  footer: {
+    flex: 9,
+    backgroundColor: '#4E7E80',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    alignItems: 'center'
+  },
+  upper:{
+    flex: 2,
+    flexDirection: 'row'
+  },
+  left:{
+    flex: 2,
+    flexDirection: 'column',
+    alignItems: 'flex-end'
   },
   title: {
-    fontFamily: "AvenirNext-Bold",
-    marginTop: 10, // Redundant
-    fontSize: 50,
-    paddingTop: 5,
+    fontFamily: 'AvenirNext-Regular',
+    fontSize: 40,
+    marginTop: 30,
     color: 'white'
   },
-  subtitle: {
-    fontFamily: "AvenirNextCondensed-UltraLightItalic",
-    fontSize: 18,
-    fontWeight: '400',
-    color: 'white',
-  },
-  photoButton: {
-    //backgroundColor: '#0DA062', // Old colors
-    backgroundColor: '#4E7E80',
-    width: '100%',
-    height: 80,
-    alignItems: 'center',
-    justifyContent: 'center',
-    opacity: 0.86
-
-  },
-  pdfButton: {
-    //backgroundColor: '#ef476f', // Old Colors
-    backgroundColor: '#B86B6B',
-    width: '100%',
-    height: 80,
-    alignItems: 'center',
-    justifyContent: 'center',
-    opacity: 0.86
-  },
-  buttonArray: {
+  right:{
     flex: 1,
-    justifyContent: 'flex-end',
-    alignContent: 'center'
+    flexDirection: 'column',
+    alignItems: 'flex-end'
   },
-  defaultText: {
-    //backgroundColor:'yellow',
-    fontFamily: "AvenirNext-Bold",
-    fontSize: 20,
-    color: "white",
+  close: {
+    width: 45,
+    height: 35,
+    marginTop: 40,
+    marginRight: 30,
+    tintColor: 'white'
+  },
+  checkIcon: {
+    flex: 4,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'center'
+  },
+  icon: {
+    tintColor: 'white',
+  },
+  buttons: {
+    flex: 4,
+    justifyContent: 'flex-start',
+    paddingTop: 30
+  },
+  saveButton: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#4E7E80'
+  },
+  saveText: {
+    color: 'white',
+    fontFamily: "AvenirNext-Regular",
+    fontSize: 30
   }
 });
-
-// Color Palatte: https://coolors.co/f72585-b5179e-7209b7-560bad-480ca8-3a0ca3-3f37c9-4361ee-4895ef-4cc9f0
