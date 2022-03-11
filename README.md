@@ -10,6 +10,7 @@ Nuha Shaikh ([nuhashaikh](https://github.com/nuhashaikh))
 Harrison Chen ([Hechen93](https://github.com/Hechen93))
 Aasima Gadiwan ([aasimag](https://github.com/aasimag))
 Abod Abbas ([abodthedude25] (https://github.com/abodthedude25))
+Nurgul Akhshatayeva ([nurgul-ths] (https://github.com/nurgul-ths))
 
 **Front-end Team:**
 Aashirbad Dhital ([Aashirbadd](https://github.com/Aashirbadd))
