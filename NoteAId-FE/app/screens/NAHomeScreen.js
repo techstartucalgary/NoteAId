@@ -107,7 +107,8 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-start',
       width: '100%',
       alignItems: 'center',   // Along Secondary Axis?
-      position: 'absolute'
+      position: 'absolute',
+      marginTop: Platform.OS === "android" ? 50 : 0
       //,backgroundColor: 'green'
     },
     title: {
