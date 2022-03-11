@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     },
     defaultText: {
     //backgroundColor:'yellow',
-    fontFamily: "AvenirNext-Bold",
+    fontFamily: Platform.OS === "android" ? "Roboto" : "AvenirNext-Bold",
     fontSize: 20,
     color: "white",
     }

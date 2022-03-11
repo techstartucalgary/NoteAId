@@ -111,14 +111,14 @@ const styles = StyleSheet.create({
       //,backgroundColor: 'green'
     },
     title: {
-      fontFamily: "AvenirNext-Bold",
+      fontFamily: Platform.OS === "android" ? "Roboto" : "AvenirNext-Bold",
       marginTop: 10, // Redundant
       fontSize: 50,
       paddingTop: 5,
       color: 'white'
     },
     subtitle: {
-      fontFamily: "AvenirNextCondensed-UltraLightItalic",
+      fontFamily: Platform.OS === "android" ? "Roboto" : "AvenirNextCondensed-UltraLightItalic",
       fontSize: 18,
       fontWeight: '400',
       color: 'white',
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     },
     defaultText: {
       //backgroundColor:'yellow',
-      fontFamily: "AvenirNext-Bold",
+      fontFamily: Platform.OS === "android" ? "Roboto" : "AvenirNext-Bold",
       fontSize: 20,
       color: "white",
     }
