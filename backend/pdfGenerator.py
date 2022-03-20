@@ -9,3 +9,7 @@ def pdfGenerator(text: str, fileName: str = "PDFOutput") -> None:
     pdf.multi_cell(0, 10, txt=txt, border=0, align='L')
     pdf.output(f'{fileName}.pdf')
     return None
+
+# TODO:
+# watch Docker intro
+# freecodecamp dockerize flask app

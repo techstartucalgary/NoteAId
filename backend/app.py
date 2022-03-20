@@ -9,13 +9,16 @@ app = Flask(__name__)
 UPLOAD_FOLDER = '.'
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
 
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 @app.route("/")
 def home():
     return "<p>Hello, World!</p>"
+
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -34,3 +37,7 @@ def upload():
         text = summarize(detect_text(filename))
         os.remove(filename)
         return text
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
