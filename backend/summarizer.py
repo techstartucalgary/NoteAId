@@ -33,10 +33,15 @@ def summarize(text: str) -> str:
 
     word_freq = dict()
     stopWords = stopwords.words("english") # Words like: I, you, is, was, what, do, have... 
+    stopWordsCapital = stopwords.words("english")
+
+    for word in stopWordsCapital:
+        word.capitalize()
     punctuationList = ['!', ',', '(', ')', '[', ']', '{', '}', '.', ':', 'The' ]
     stemmer = PorterStemmer()
 
     stopWords.extend(punctuationList)
+    stopWords.extend(stopWordsCapital)
 
     stopWords = set(stopWords)
 
