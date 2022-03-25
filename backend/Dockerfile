@@ -7,7 +7,7 @@ WORKDIR /python-docker
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
-#adds nltk lib 
+RUN [ "python", "-c", "import nltk; nltk.download('punkt'); nltk.download('stopwords');" ]
 COPY . .
 ENV GOOGLE_APPLICATION_CREDENTIALS="creds.json"
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
