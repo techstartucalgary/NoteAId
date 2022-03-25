@@ -1,6 +1,5 @@
 from fpdf import FPDF
 
-
 def pdfGenerator(text: str, fileName: str = "PDFOutput") -> None:
     txt = text.encode('latin-1', 'replace').decode('latin-1')
     pdf = FPDF()
