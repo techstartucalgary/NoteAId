@@ -1,4 +1,3 @@
-
 import os
 from flask import Flask, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
@@ -22,6 +21,7 @@ def home():
 @app.route('/upload', methods=['POST'])
 def upload():
     # check if the post request has the file part
+    print('GOT IN THE FUNCTION')
     if 'file' not in request.files:
         flash('No file part')
         return redirect(request.url)
@@ -32,6 +32,7 @@ def upload():
         flash('No selected file')
         return redirect(request.url)
     for file in files:
+        print('in THE FOR LOOP')
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
@@ -42,7 +43,8 @@ def upload():
             os.remove(filename)
             texts.append(text)
         else:
-            redirect(url_for('upload_pdf'))
+            print('not a valid file')
+            redirect(request.url)
 
     return texts
 
