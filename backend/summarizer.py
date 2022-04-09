@@ -4,7 +4,7 @@ import nltk
 
 lemma = nltk.wordnet.WordNetLemmatizer()
 
-def summarize(text: str) -> str:
+def summarize(text: str, summLvl: str) -> str:
     words = word_tokenize(text)
 
     word_freq = dict()
@@ -65,9 +65,21 @@ def summarize(text: str) -> str:
         return int(sum / len(sentence_scores))
 
     sentences = sent_tokenize(text)
+    
+    #pick the top n scores from this list --> sentence_scores based off user summary level
     sentence_scores = score_sentences(sentences, word_freq)
-    threshold = average_score(sentence_scores) * 0.8 # Adjust this number to increase the summary length
 
+    #Low summarization of raw text. Almost nothing
+    if summLvl == 'low':  
+        threshold = average_score(sentence_scores) * 0.75 # Adjust this number to increase the summary length
+
+    #Stronger summarizations above 1
+    elif summLvl == 'medium':
+        threshold = average_score(sentence_scores) * 1.25
+    
+    elif summLvl == 'high':
+        threshold = average_score(sentence_scores) * 2
+    
     sentence_count = 0
     summary = ""
 
