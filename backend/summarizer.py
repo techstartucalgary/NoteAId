@@ -4,18 +4,20 @@ import nltk
 
 lemma = nltk.wordnet.WordNetLemmatizer()
 
-def summarize(text: str, summLvl: str) -> str:
+
+def summarize(text: str, summary_level: str) -> str:
     words = word_tokenize(text)
 
     word_freq = dict()
-    stopWords = stopwords.words("english") # Words like: I, you, is, was, what, do, have... 
+
+    # Words like: I, you, is, was, what, do, have...
+    stopWords = stopwords.words("english")
     stopWordsCapital = []
-    
 
     for word in stopWords:
         stopWordsCapital.append(word.capitalize())
-        
-    punctuationList = ['!', ',', '(', ')', '[', ']', '{', '}', '.', ':']
+
+    punctuationList = ['.', ',', '!', ':', '(', ')', '[', ']', '{', '}']
 
     stopWords.extend(punctuationList)
     stopWords.extend(stopWordsCapital)
@@ -52,7 +54,8 @@ def summarize(text: str, summLvl: str) -> str:
                     else:
                         sentence_scores[sentence[:10]] = word_freq[wordValue]
 
-            sentence_scores[sentence[:10]] = sentence_scores[sentence[:10]] // word_count
+            sentence_scores[sentence[:10]
+                            ] = sentence_scores[sentence[:10]] // word_count
 
         return sentence_scores
 
@@ -61,33 +64,37 @@ def summarize(text: str, summLvl: str) -> str:
         sum = 0
         for entry in sentence_scores:
             sum += sentence_scores[entry]
-        
+
         return int(sum / len(sentence_scores))
 
     sentences = sent_tokenize(text)
-    
-    #pick the top n scores from this list --> sentence_scores based off user summary level
+
+    # Pick the top n scores from this list --> sentence_scores based off user summary level
     sentence_scores = score_sentences(sentences, word_freq)
 
-    #Low summarization of raw text. Almost nothing
-    if summLvl == 'low':  
-        threshold = average_score(sentence_scores) * 0.75 # Adjust this number to increase the summary length
+    sorted_scores = list(sentence_scores.items())
+    sorted_scores.sort(key=lambda tup: tup[1], reverse=True)
 
-    #Stronger summarizations above 1
-    elif summLvl == 'medium':
-        threshold = average_score(sentence_scores) * 1.25
-    
-    elif summLvl == 'high':
-        threshold = average_score(sentence_scores) * 2
-    
+    if summary_level == 'long':
+        # Low summarization of the raw text. Almost nothing
+        multiplier = 0.70  # Percentage of original text
+    elif summary_level == 'normal':
+        multiplier = 0.50
+    elif summary_level == 'short':
+        multiplier = 0.30
+
+    num_of_sentences = round(multiplier * len(sorted_scores))
+
+    # Slice the list
+    sorted_scores = sorted_scores[:num_of_sentences]
+    summary_sentences = dict(sorted_scores)
+
+    # Construct the summary:
     sentence_count = 0
     summary = ""
-
     for sentence in sentences:
-        if sentence[:10] in sentence_scores and sentence_scores[sentence[:10]] > threshold:
-            summary += " " + sentence
+        if sentence[:10] in summary_sentences:
+            summary += sentence + " "
             sentence_count += 1
 
     return summary
-
-
