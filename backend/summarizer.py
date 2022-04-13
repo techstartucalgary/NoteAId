@@ -75,6 +75,7 @@ def summarize(text: str, summary_level: str) -> str:
     sorted_scores = list(sentence_scores.items())
     sorted_scores.sort(key=lambda tup: tup[1], reverse=True)
 
+    multiplier = 1.0
     if summary_level == 'long':
         # Low summarization of the raw text. Almost nothing
         multiplier = 0.70  # Percentage of original text
@@ -82,6 +83,8 @@ def summarize(text: str, summary_level: str) -> str:
         multiplier = 0.50
     elif summary_level == 'short':
         multiplier = 0.30
+    elif summary_level == 'none':
+        multiplier = 1.0
 
     num_of_sentences = round(multiplier * len(sorted_scores))
 
