@@ -3,3 +3,4 @@ python-dotenv
 google-cloud-vision
 Flask
 fpdf
+pymupdf
