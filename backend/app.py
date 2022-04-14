@@ -1,11 +1,13 @@
 import os
 import io
-from flask import Flask, request, redirect, send_file
+import fitz
+import time
+from flask import Flask, request, redirect, send_file, send_from_directory
 from werkzeug.utils import secure_filename
 from pdfGenerator import generate_pdf
 from summarizer import summarize
 from cloudVision import detect_text
-import fitz
+
 
 app = Flask(__name__)
 
@@ -49,15 +51,18 @@ def upload():
 
     raw_text = " ".join(texts)
     summary = summarize(raw_text, summarization_level)
-    pdf_bytes = generate_pdf(summary)
+    out_file_path = "output/" + time.strftime("%Y%m%d%H%M%S") + ".pdf"
+    generate_pdf(summary, out_file_path)
 
-    return send_file(
-        io.BytesIO(pdf_bytes),
-        mimetype='application/pdf',
-        as_attachment=True,
-        attachment_filename='summary.pdf'
-    )
-
+    # return send_file(
+    #     io.BytesIO(pdf_bytes),
+    #     mimetype='application/pdf',
+    #     as_attachment=True,
+    #     attachment_filename='summary.pdf'
+    # )
+    res = {"uri": "/" + out_file_path}
+    return res
+    
 
 @app.route('/summarize_pdf', methods=['POST'])
 def upload_pdf():
@@ -98,15 +103,17 @@ def upload_pdf():
 
         raw_text = " ".join(texts)
         summary = summarize(raw_text, summarization_level)
-        pdf_bytes = generate_pdf(summary)
+        out_file_path = "output/" + time.strftime("%Y%m%d%H%M%S") + ".pdf"
+        generate_pdf(summary, out_file_path)
 
-        return send_file(
-            io.BytesIO(pdf_bytes),
-            mimetype='application/pdf',
-            as_attachment=True,
-            attachment_filename='summary.pdf'
-        )
+        res = {"uri": "/" + out_file_path}
+        return res
+
+
+@app.route('/output/<path:path>')
+def download_file(path):
+    return send_from_directory('output', path)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")

@@ -1,18 +1,18 @@
 import React from 'react';
 import { View, StyleSheet, TouchableHighlight, Text } from 'react-native';
 
-function NAButton({text, onPress, style, color}) {
+function NAButton({ text, onPress, style, color }) {
   return (
     <TouchableHighlight activeOpacity={1} onPress={onPress}>
-        <View style={[styles.photoButton,{backgroundColor:color} ,style]}>
-            <Text style={styles.defaultText}>{text}</Text>
-        </View>
+      <View style={[styles.photoButton, { backgroundColor: color }, style]}>
+        <Text style={styles.defaultText}>{text}</Text>
+      </View>
     </TouchableHighlight>
   );
 }
 
 const styles = StyleSheet.create({
-    photoButton: {
+  photoButton: {
     //backgroundColor: '#0DA062', // Old colors
     backgroundColor: '#4E7E80',
     width: '100%',
@@ -21,14 +21,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     opacity: 0.86
 
-    },
-    defaultText: {
+  },
+  defaultText: {
     //backgroundColor:'yellow',
     fontFamily: Platform.OS === "android" ? "Roboto" : "AvenirNext-Bold",
     fontSize: 20,
     color: "white",
-    }
-  
+  }
+
 });
 
 export default NAButton;
