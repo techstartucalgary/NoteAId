@@ -1,4 +1,4 @@
-nltk==3.5
+nltk==3.6.6
 python-dotenv
 google-cloud-vision
 Flask
